@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng ký - Shop Dân Buôn</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/css/style.css">
+</head>
+<body class="auth-page">
+<div class="auth-box">
+  <h1><i class="fas fa-user-plus"></i> Đăng ký</h1>
+  <div class="form-group">
+    <label for="username">Tài khoản</label>
+    <input type="text" id="username" autocomplete="username" placeholder="Tên đăng nhập">
+  </div>
+  <div class="form-group">
+    <label for="phone">Số điện thoại</label>
+    <input type="tel" id="phone" autocomplete="tel" placeholder="VD: 0826024568">
+  </div>
+  <div class="form-group">
+    <label for="password">Mật khẩu</label>
+    <input type="password" id="password" autocomplete="new-password" placeholder="Tối thiểu 4 ký tự">
+  </div>
+  <div class="form-group">
+    <label for="password2">Nhập lại mật khẩu</label>
+    <input type="password" id="password2" autocomplete="new-password" placeholder="Nhập lại mật khẩu">
+  </div>
+  <div class="remember-row">
+    <input type="checkbox" id="remember" checked>
+    <label for="remember">Lưu tài khoản &amp; mật khẩu sau khi đăng ký</label>
+  </div>
+  <button class="btn btn-primary btn-block" id="regBtn" onclick="doRegister()">Đăng ký</button>
+  <a href="/" style="text-decoration:none">
+    <button type="button" class="btn btn-outline btn-block" style="margin-top:10px">Về trang chủ</button>
+  </a>
+  <div class="msg" id="msg"></div>
+  <div class="links">Đã có tài khoản? <a href="/auth">Đăng nhập</a></div>
+</div>
+<script>
+async function doRegister() {
+  var u = document.getElementById('username').value.trim();
+  var p = document.getElementById('phone').value.trim();
+  var pw = document.getElementById('password').value;
+  var pw2 = document.getElementById('password2').value;
+  var remember = document.getElementById('remember').checked;
+  var msg = document.getElementById('msg');
+  var btn = document.getElementById('regBtn');
+
+  if (!u || !pw) {
+    msg.className = 'msg err';
+    msg.textContent = 'Vui lòng điền tài khoản và mật khẩu';
+    return;
+  }
+  if (pw.length < 4) {
+    msg.className = 'msg err';
+    msg.textContent = 'Mật khẩu tối thiểu 4 ký tự';
+    return;
+  }
+  if (pw !== pw2) {
+    msg.className = 'msg err';
+    msg.textContent = 'Mật khẩu nhập lại không khớp';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Đang đăng ký...';
+  msg.className = 'msg';
+  msg.textContent = '';
+
+  try {
+    var r = await fetch('/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: u, phone: p, password: pw })
+    });
+    var d = await r.json();
+
+    if (d.ok) {
+      msg.className = 'msg ok';
+      msg.textContent = 'Đăng ký thành công!';
+      localStorage.setItem('token', d.token);
+      localStorage.setItem('username', u);
+      if (remember) {
+        localStorage.setItem('saved_username', u);
+        localStorage.setItem('saved_password', pw);
+      }
+      setTimeout(function() { location.href = '/'; }, 700);
+    } else {
+      msg.className = 'msg err';
+      msg.textContent = d.msg || 'Đăng ký thất bại';
+      btn.disabled = false;
+      btn.textContent = 'Đăng ký';
+    }
+  } catch (e) {
+    msg.className = 'msg err';
+    msg.textContent = 'Lỗi kết nối server. Hãy chạy app.py rồi thử lại.';
+    btn.disabled = false;
+    btn.textContent = 'Đăng ký';
+  }
+}
+
+document.getElementById('password2').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doRegister();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng nhập - Shop Dân Buôn</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/css/style.css">
+</head>
+<body class="auth-page">
+<div class="auth-box">
+  <h1><i class="fas fa-sign-in-alt"></i> Đăng nhập</h1>
+  <div class="form-group">
+    <label for="username">Tài khoản</label>
+    <input type="text" id="username" autocomplete="username" placeholder="Nhập tài khoản">
+  </div>
+  <div class="form-group">
+    <label for="password">Mật khẩu</label>
+    <input type="password" id="password" autocomplete="current-password" placeholder="Nhập mật khẩu">
+  </div>
+  <div class="remember-row">
+    <input type="checkbox" id="remember" checked>
+    <label for="remember">Lưu tài khoản &amp; mật khẩu</label>
+  </div>
+  <button class="btn btn-primary btn-block" id="loginBtn" onclick="doLogin()">Đăng nhập</button>
+  <a href="/" style="text-decoration:none">
+    <button type="button" class="btn btn-outline btn-block" style="margin-top:10px">Về trang chủ</button>
+  </a>
+  <div class="msg" id="msg"></div>
+  <div class="links">Chưa có tài khoản? <a href="/register">Đăng ký</a></div>
+</div>
+<script>
+(function() {
+  // Tự điền tài khoản / mật khẩu đã lưu
+  try {
+    var savedU = localStorage.getItem('saved_username');
+    var savedP = localStorage.getItem('saved_password');
+    if (savedU) document.getElementById('username').value = savedU;
+    if (savedP) document.getElementById('password').value = savedP;
+    if (savedU || savedP) document.getElementById('remember').checked = true;
+  } catch (e) {}
+})();
+
+async function doLogin() {
+  var u = document.getElementById('username').value.trim();
+  var pw = document.getElementById('password').value;
+  var remember = document.getElementById('remember').checked;
+  var msg = document.getElementById('msg');
+  var btn = document.getElementById('loginBtn');
+
+  if (!u || !pw) {
+    msg.className = 'msg err';
+    msg.textContent = 'Vui lòng điền đầy đủ tài khoản và mật khẩu';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Đang đăng nhập...';
+  msg.className = 'msg';
+  msg.textContent = '';
+
+  try {
+    var r = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: u, password: pw })
+    });
+    var d = await r.json();
+
+    if (d.ok) {
+      msg.className = 'msg ok';
+      msg.textContent = 'Đăng nhập thành công!';
+      localStorage.setItem('token', d.token);
+      localStorage.setItem('username', u);
+      if (remember) {
+        localStorage.setItem('saved_username', u);
+        localStorage.setItem('saved_password', pw);
+      } else {
+        localStorage.removeItem('saved_username');
+        localStorage.removeItem('saved_password');
+      }
+      setTimeout(function() { location.href = '/'; }, 700);
+    } else {
+      msg.className = 'msg err';
+      msg.textContent = d.msg || 'Sai tài khoản hoặc mật khẩu';
+      btn.disabled = false;
+      btn.textContent = 'Đăng nhập';
+    }
+  } catch (e) {
+    msg.className = 'msg err';
+    msg.textContent = 'Lỗi kết nối server. Hãy chạy app.py rồi thử lại.';
+    btn.disabled = false;
+    btn.textContent = 'Đăng nhập';
+  }
+}
+
+// Enter để đăng nhập
+document.getElementById('password').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doLogin();
+});
+document.getElementById('username').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') document.getElementById('password').focus();
+});
+</script>
+</body>
+</html>

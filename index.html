@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHOP BÍCH TRÂM - Củ Năng Tươi Hút Chân Không</title>
+<meta name="theme-color" content="#166534">
+<meta name="description" content="Củ năng tươi đã gọt sẵn, hút chân không. Mua củ năng sạch rẻ uy tín. Liên hệ Zalo 0826024568">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+<header class="header">
+  <div class="container header-inner">
+    <a href="/" class="logo"><i class="fas fa-leaf"></i> SHOP BÍCH TRÂM</a>
+    <nav class="nav" id="navMenu">
+      <a href="#products">Sản phẩm</a>
+      <a href="#contact">Liên hệ</a>
+      <a href="/profile" id="navProfile" style="display:none">Tài khoản</a>
+    </nav>
+    <div class="header-actions" id="authBox">
+      <a href="/auth" class="btn btn-outline btn-sm">Đăng nhập</a>
+      <a href="/register" class="btn btn-primary btn-sm">Đăng ký</a>
+    </div>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
+  </div>
+</header>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<section class="hero">
+  <div class="container hero-content">
+    <div class="hero-text">
+      <h1>Củ Năng Tươi<br><span>Hút Chân Không</span></h1>
+      <p>Củ năng (mã thầy) đã gọt sẵn, trắng sạch, giòn ngọt. Đóng túi hút chân không giữ tươi lâu. Phù hợp nấu chè, xào, canh.</p>
+      <a href="#products" class="btn btn-primary btn-lg"><i class="fas fa-shopping-bag"></i> Mua ngay</a>
+    </div>
+    <div class="hero-img">
+      <img src="static/images/product.jpg" alt="Củ năng tươi hút chân không" width="960" height="1280" loading="eager">
+    </div>
+  </div>
+</section>
+
+<!-- Nhạc nền ẩn, tự chạy -->
+<audio id="bgMusic" loop preload="auto" autoplay playsinline style="display:none">
+  <source src="static/music/music.mp3" type="audio/mpeg">
+</audio>
+
+<section class="section" id="products">
+  <div class="container">
+    <h2 class="section-title">Sản phẩm Củ Năng</h2>
+    <p class="section-sub">Tươi sạch – Gọt sẵn – Hút chân không</p>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-img">
+          <img src="static/images/product1.jpg" alt="Củ Năng 1kg" loading="lazy">
+        </div>
+        <h3>Củ Năng 1kg</h3>
+        <p class="desc">Gói tiện dùng, đã gọt sạch, hút chân không.</p>
+        <p class="price">50.000đ</p>
+        <button class="btn btn-primary btn-block" onclick="addToCart('Củ Năng 1kg',50000)">
+          <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+        </button>
+      </div>
+      <div class="product-card featured">
+        <div class="badge">Bán chạy</div>
+        <div class="product-img">
+          <img src="static/images/product2.jpg" alt="Củ Năng ưu đãi" loading="lazy">
+        </div>
+        <h3>Củ Năng ưu đãi</h3>
+        <p class="desc">Đủ dùng gia đình, giòn ngọt, giữ tươi lâu.</p>
+        <p class="price">15.000đ</p>
+        <button class="btn btn-primary btn-block" onclick="addToCart('Củ Năng ưu đãi',15000)">
+          <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section contact" id="contact">
+  <div class="container">
+    <h2 class="section-title">Liên hệ đặt hàng</h2>
+    <p class="section-sub">Hỗ trợ nhanh qua Zalo / Điện thoại / Facebook</p>
+    <div class="contact-box">
+      <div class="contact-item">
+        <i class="fas fa-phone-alt" style="color:#166534"></i>
+        <a href="tel:0826024568">0826 024 568</a>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-comment-dots" style="color:#0068ff"></i>
+        <a href="https://zalo.me/0826024568" target="_blank" rel="noopener">Zalo: 0826024568</a>
+      </div>
+      <div class="contact-item">
+        <i class="fab fa-facebook" style="color:#1877f2"></i>
+        <a href="https://www.facebook.com/nguyenquoctrungbodo" target="_blank" rel="noopener">FB: nguyenquoctrungbodo</a>
+      </div>
+      <div class="contact-actions">
+        <a href="https://zalo.me/0826024568" class="btn btn-zalo btn-lg" target="_blank" rel="noopener">
+          <i class="fas fa-comment"></i> Nhắn Zalo ngay
+        </a>
+        <a href="https://www.facebook.com/nguyenquoctrungbodo" class="btn btn-fb btn-lg" target="_blank" rel="noopener">
+          <i class="fab fa-facebook-f"></i> Facebook
+        </a>
+        <a href="tel:0826024568" class="btn btn-primary btn-lg">
+          <i class="fas fa-phone"></i> Gọi 0826024568
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="cartModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeCart()" aria-label="Đóng">&times;</span>
+    <h3 style="margin-top:0;color:#14532d">Giỏ hàng</h3>
+    <div id="cartItems"></div>
+    <p class="cart-total">Tổng: <strong id="cartTotal">0đ</strong></p>
+    <button class="btn btn-primary btn-block" onclick="checkout()">
+      <i class="fas fa-paper-plane"></i> Đặt hàng qua Zalo
+    </button>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 SHOP BÍCH TRÂM - Củ Năng Tươi</p>
+    <p>Hotline / Zalo: <a href="tel:0826024568">0826024568</a> · FB: <a href="https://www.facebook.com/trong.hieu.757760" target="_blank" rel="noopener">NGUYENTRONGHIEU</a></p>
+  </div>
+</footer>
+
+<button class="cart-fab" onclick="openCart()" aria-label="Giỏ hàng">
+  <i class="fas fa-shopping-cart"></i>
+  <span id="cartCount">0</span>
+</button>
+
+<script src="static/js/main.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('token') && localStorage.getItem('username')) {
+      var np = document.getElementById('navProfile');
+      if (np) np.style.display = 'block';
+    }
+  });
+</script>
+</body>
+</html>
